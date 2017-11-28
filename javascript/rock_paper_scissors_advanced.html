@@ -1,0 +1,66 @@
+<html>
+	<head>
+		<title>Rock, Paper, Scissors - Advanced</title>
+		<script type="text/javascript">
+			/*
+				This is a dynamic version of Rock, Paper, Scissors, that will let you choose what options you can select
+				and define what will win - letting you create a Rock/Paper/Scissors type game that has more than 3 options.
+			*/
+			/*
+			Below are all the game options.  It is an array (a collection of items) of Objects.  An array is defined 
+			by the [ and ].  An object is defined by { and }.  
+			*/
+			
+			var choices = [
+				{"name":"Rock","wins_against":[2], "loses_against":[1], "ties_with":[0,3]}, // option 0 -- this is a comment, and here to easily know what number each option is.
+				{"name":"Paper","wins_against":[0], "loses_against":[2],"ties_with":[1,3]}, // option 1
+				{"name":"Scissor","wins_against":[1], "loses_against":[0],"ties_with":[2,3]}, // option 2
+				{"name":"Air","wins_against":[], "loses_against":[], "ties_with":[0,1,2,3]}, // option 3
+			];
+			
+			//Below is a for loop.  it will, one by one, go through each value in an array.  In this case - choices.
+			function setupGameboard() {
+				for (i in choices) {
+					//First - add a new button for each selection item to the gameboard element.  The += means "add to the existing value"
+					document.getElementById("gameboard").innerHTML += "<button onClick='selectChoice("+i+")'>"+choices[i]['name']+"</button>";	
+				}
+			}
+			
+			function selectChoice(myChoice) {
+				//Select a random item for the computer.  Since we do not have a set list of options, we are going to use choices.length
+				//which returns that amount of items within the array
+				var computerChoice = parseInt(Math.random()*choices.length);	
+				
+				//load the object for each choice - so we can see if the player was a winner or loser.
+				var myItem = choices[myChoice];
+				var compItem = choices[computerChoice];
+				//check to see if there is a tie  In this case, we're using !==  The ! means NOT.  So, we're checking to see if indexOf is NOT equal to -1.  
+				//The .indexOf function will return -1 if the value is not found.
+				if (myItem.ties_with.indexOf(computerChoice) !== -1) {
+					document.getElementById("results").innerHTML = "You chose " + myItem.name + " and the computer chose " + compItem.name + " - It's a tie!";	
+				} else if (myItem.wins_against.indexOf(computerChoice) !== -1) {
+					//see if the computer's choice was in the wins-against values
+					document.getElementById("results").innerHTML = "You chose " + myItem.name + " and the computer chose " + compItem.name + " - YOU WIN!!";	
+				} else if (myItem.loses_against.indexOf(computerChoice) !== -1) {
+					//see if the computer's choice was in the wins-against values
+					document.getElementById("results").innerHTML = "You chose " + myItem.name + " and the computer chose " + compItem.name + " - You lost...";	
+				}
+					
+			}
+			
+		</script>
+	</head>
+	<!-- 
+	This is an HTML-based comment but works the same.  It is ignored.  Below has an 'onload' in the body tag.  That means that the function
+	will run when the content within the body has been loaded.  This ensures that all the elements (most importantly the 'gameboard' is available
+	to write to.
+	-->
+	<body onload="setupGameboard()">
+		<h1>Rock, Paper, Scissors - Advanced</h1>
+		<h3>Make your selection</h3>
+		<div id="gameboard">
+		</div>
+		<div id="results">
+		</div>
+	</body>
+</html>

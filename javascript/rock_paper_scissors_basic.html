@@ -1,0 +1,64 @@
+<html>
+	<head>
+		<title>Rock Paper Scissors - Basic</title>
+		<script type="text/javascript">
+			/* These lines are comments.  They are ignored by the computer, but are used to 
+				 provide explanation and instruction.  A single line comment has // at the front
+				 whereas a multi-line comment like this start with /* and ends with */
+			/*
+				 The buttons below all call the one function below - makeSelection.  The difference
+				 between each button is the 'parameter' which is a value passed between ( and ).  The
+				 values passed are 0, 1, and 2.  We will use 0 as rock, 1 as paper, and 2 as scissors
+			*/
+			function makeSelection(myChoice) {
+				//Below is something called an array.  It holds the word values for our numbers, 0, 1, and 2 - rock, paper and scissors.  
+				//Javascript - as with many other languages, start their values at 0.  
+				var option = ['Rock','Paper','Scissors'];
+
+				//The next line will pick a random number.  It may seem a bit crazy but the important number to worry about
+				// is the 3 below.  The result will be 0, 1 or 2.  
+				var computerChoice = parseInt(Math.random()*3);
+				
+				//if the choices are the same, let the user know it was a tie!  Notice that two equal signs were used.  Using only one
+				// equal sign would say 'set myChoice to equal computerChoice' as opposed to 'does myChoice equal computer choice?'
+				if (myChoice == computerChoice) {
+					var output = "You both chose " + option[myChoice] + " - TIE!";
+					//The below code will take the value above and set it to the item within the element on the page.
+					//You don't need to understand all the parts, but it's important to know that the "results" below refers to the id="results" 
+					//in the HTML below.
+					document.getElementById("results").innerHTML = output;
+				} else if (myChoice == 0 && computerChoice == 1) {
+					//IF/Else works in logical order.  Else will only trigger if the first condition
+					//is not met.  This also has two checks - it checks to see if myChoice == 0 (rock) && (which means AND) computerChoice == 1 (paper)
+					//You playing rock, and the computer plays paper will result in a loss.	
+					var output = "You chose " + option[myChoice] + " and the computer chose " + option[computerChoice] + " - You lose...";
+					document.getElementById("results").innerHTML = output;
+				} else if (myChoice == 1 && computerChoice == 2) {
+					//another else if - this time for paper and scissors, another loss
+					var output = "You chose " + option[myChoice] + " and the computer chose " + option[computerChoice] + " - You lose...";
+					document.getElementById("results").innerHTML = output;
+				} else if (myChoice == 2 && computerChoice == 0) {
+					//another else if - this time for scissors and rock, another loss
+					var output = "You chose " + option[myChoice] + " and the computer chose " + option[computerChoice] + " - You lose...";
+					document.getElementById("results").innerHTML = output;
+				} else {
+					//We have covered every possible losing or tie situation, so the only options left are ones where you win.
+					var output = "You chose " + option[myChoice] + " and the computer chose " + option[computerChoice] + " - YOU WIN!";
+					document.getElementById("results").innerHTML = output;
+					
+				}
+					
+			}
+		</script>
+			
+	</head>
+	<body>
+		<h1>Make your pick...</h1>
+		<button id="rock_select" onclick="makeSelection(0);">Rock</button>
+		<button id="rock_select" onclick="makeSelection(1);">Paper</button>
+		<button id="rock_select" onclick="makeSelection(2);">Scissors</button>
+		<h2>Result:</h2>
+		<div id="results">
+		</div>
+	</body>
+</html>
