@@ -1,0 +1,120 @@
+<!--  
+Beat Demo is a basic game that is meant to be Rhythm based.  While it doesn't play sound, the buttons appear on a
+set time, and last for a set time.  Their location is random, but you could easily make it fixed and based off
+a pattern like Guitar Hero, Rock Band, etc.
+-->
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Beat Demo</title>
+		<script type="text/javascript">
+			/* The first things is to declare all 'global' variables.  These are variables that I can use in any function 
+			and will retain their value.  If a variable is declared within a function, it will be forgotten once the
+			function is complete.
+			
+			The variables are store, beat_count, and game_active - which tells if the game is running or not.
+			*/
+			var score = 0;
+			var beat_count = 0;
+			var game_active = false;
+
+			/* beginGame() is a function that takes no parameters and sets up the gameboard and gets the game
+			ready to be played.
+			*/
+			function beginGame() {
+				score = 0; /* reset the score to 0 */
+				beat_count = 0; /* reset the beat count to 0 */
+				game_active = true; /* set game active - so that things will run smoothly */
+				document.getElementById('gameboard').innerHTML = 'Starting in 3...'; //Set the gameboard to have the text "starting in 3..."
+				/*
+				The setTimeout function will delay whatever code is run within it.  The first parameter of 'setTimeout' is actually a function,
+				which is why below, I have 3 lines with a function() after setTimeout.  The 2nd paremeter is how long to delay, in milliseconds.
+				So the first command is delayed 1 second, the 2nd 2 seconds, and the 3rd 3 secods.
+				*/
+				setTimeout(function() { document.getElementById('gameboard').innerHTML = 'Starting in 2...'; }, 1000);
+				setTimeout(function() { document.getElementById('gameboard').innerHTML = 'Starting in 1...'; }, 2000);
+				setTimeout(function() { document.getElementById('gameboard').innerHTML = ''; }, 3000);
+		
+				//After 3 seconds, call the "createButton" function.
+				setTimeout(createButton, 3000);
+				//after 15 seconds, call the "end game" function to end the game.
+				setTimeout(endGame,15000);
+			}
+			
+			/* This function will end the game - setting "game_active" to false, and providing a message in the 'gameboard' element
+			to let the user know what their score was, and how many beats were displayed.
+			*/
+			function endGame() {
+				game_active = false;	
+				document.getElementById('gameboard').innerHTML = "Game over...  Your score: " + score + " out of a total of " + beat_count;
+			}
+			
+			/* This function will allow a button to be clicked */
+			function buttonClicked(button_number) {
+				//increase the score by 1.  This could also be written like: score = score +1; but score++ is much simpler.
+				score++;
+				/*the next 2 lines will get rid of the button.  Javascript will not let you directly remove an object from 
+				the HTML document, but it can remove a child, which is why you have to use .parentNode.removeChild
+				*/
+				var element = document.getElementById('game_button_'+button_number);
+				element.parentNode.removeChild(element);
+			}
+			
+			/* createButton is a function that will create a new button on the board.  It will also create a call for the
+			next button to be created */
+			function createButton() {
+				if (!game_active)	return true; //If the game is no longer active, don't create a button.  By returning - the rest of the code is ignored.
+				beat_count++; //increase the beat counter
+
+				//select a random top and left position for the beat.  If you make the 400 smaller on each, the beats will be closer together.
+				var top = parseInt(Math.random()*400); 
+				var left = parseInt(Math.random()*400);
+				//create the beat into the gameboard.  It is a div with an ID of game_button_+beat_count - and it has an onClick event - which calls
+				//"buttonClicked" allowing the score to be recorded and the button to be removed.
+				document.getElementById('gameboard').innerHTML += '<div id="game_button_'+beat_count+'" class="click_button" onclick="buttonClicked('+beat_count+');" style="position:absolute; top: '+top+'px; left: '+left+'px;">&nbsp;</div>';
+				//set up a timeout for 700ms (.7 seconds) to remove the button if the user didn't click it.
+				setTimeout(function() { 
+					var element = document.getElementById('game_button_'+beat_count);
+					element.parentNode.removeChild(element);
+				}, 700);
+				
+				//create a timeout of 1 second to run this function all over again - creating the next button.
+				setTimeout(createButton, 1000);
+			}
+			
+		</script>
+		
+		<style>
+			/*
+			Create the style for the button.  In this case, a circle with height and width 42.  
+			border-radius is used to make the normal box rounded.  It has a background color of RED.
+			The cursor has been set to 'pointer' to make the item look like a button that is clickable.
+			If you don't define the cursor, the mouse pointer will just be an arrow.  You will still be 
+			able to click. 
+			*/
+			.click_button {
+				height: 42px;
+				width: 42px;
+				border-radius: 21px;
+				background-color: rgba(255,0,0,1);
+				cursor: pointer;
+			}
+			
+			/* This is required so that the absolute positioning is based off the gameboard position, and not the 
+			entire document */
+			#gameboard {
+				position: relative;	
+			}
+		</style>
+			
+	</head>
+	<body>
+		<h1>Beat-Based Game</h1>
+		<p>This is a game that will show buttons when a beat will happen, after which you will have a short period of time to press the button.</p>
+		<p>You get one point for every button you press.</p>
+		<button id="begin_game" onclick="beginGame();">Begin Game</button>
+		<div id="gameboard">
+			Press "Begin Game" to get started
+		</div>
+	</body>
+</html>
