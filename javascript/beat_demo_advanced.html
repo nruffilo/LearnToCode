@@ -1,0 +1,110 @@
+<!-- Please see the beat_demo.html for more details on how this code works.  All comments will be related to
+new features/functions that were used for this specific example. -->
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Beat Demo</title>
+		<script type="text/javascript">
+			/* set the global variables so we can use them wihin functions */
+			var score = 0;
+			var beat_count = 0;
+			var game_active = false;
+			
+			/* the beginGame now has a difficulty.  This parameter/variable will be used to determine how 
+			the buttons are displayed */
+			function beginGame(difficulty) {
+				/* reset the global variables */
+				score = 0;
+				beat_count = 0;
+				game_active = true;
+				//Set the start warning
+				document.getElementById('gameboard').innerHTML = 'Starting in 3...';
+				setTimeout(function() { document.getElementById('gameboard').innerHTML = 'Starting in 2...'; }, 1000);
+				setTimeout(function() { document.getElementById('gameboard').innerHTML = 'Starting in 1...'; }, 2000);
+				setTimeout(function() { document.getElementById('gameboard').innerHTML = ''; }, 3000);
+				
+				/* below are a set of if, then, else statements.  An else combined with an if is called an "else if"
+					the == is used instead of a single = as using just = would set the value of "difficulty" TO "easy" instead of
+					checking if they are equal
+				*/
+				if (difficulty == "easy") {
+					/* 
+					If it's easy, call "createButton" with the parameter 2000, and 3000, with a delay of 3000ms  
+					It will then end the game after 15 seconds	
+					*/
+					setTimeout(function() { createButton(2000,3000); }, 3000);
+					setTimeout(endGame,15000);
+				} else if (difficulty == "medium") {
+					/* 
+					If it's easy, call "createButton" with the parameter 1000, and 2000, with a delay of 3000ms  
+					It will then end the game after 14 seconds	
+					*/
+					setTimeout(function() { createButton(1000,2000); }, 3000);
+					setTimeout(endGame,14000);					
+				} else if (difficulty == "hard") {
+					/* 
+					If it's easy, call "createButton" with the parameter 600, and 1000, with a delay of 3000ms  
+					It will then end the game after 10 seconds	
+					*/
+					setTimeout(function() { createButton(600,1000); }, 3000);
+					setTimeout(endGame,10000);				
+				}	
+					
+			}
+			
+			function endGame() {
+				game_active = false;	
+				document.getElementById('gameboard').innerHTML = "Game over...  Your score: " + score + "("+ ((score/beat_count)*100).toFixed(1) + "%) out of a total of " + beat_count;
+			}
+			
+			function buttonClicked(button_number) {
+				score++;
+				var element = document.getElementById('game_button_'+button_number);
+				element.parentNode.removeChild(element);
+			}
+			
+			function createButton(visible_for,delay_to_next) {
+				if (!game_active)	return true;
+				beat_count++;
+				var top = parseInt(Math.random()*400);
+				var left = parseInt(Math.random()*400);
+				document.getElementById('gameboard').innerHTML += '<div id="game_button_'+beat_count+'" class="click_button" onclick="buttonClicked('+beat_count+');" style="position:absolute; top: '+top+'px; left: '+left+'px;">&nbsp;</div>';
+				/* Unlike the basic example, we want to create the next button (and remove this button) using a dynamic 
+				delay - the 'visible_for' and 'delay_to_next' parameters.  We also need to create the next button using those parameters
+				*/
+				setTimeout(function() { 
+					var element = document.getElementById('game_button_'+beat_count);
+					element.parentNode.removeChild(element);
+				}, visible_for);
+				setTimeout(function() { createButton(visible_for, delay_to_next); }, delay_to_next);
+			}
+			
+		</script>
+		
+		<style>
+			.click_button {
+				height: 42px;
+				width: 42px;
+				border-radius: 24px;
+				background-color: rgba(255,0,0,1);
+				cursor: pointer;
+			}
+			
+			#gameboard {
+				position: relative;	
+			}
+		</style>
+			
+	</head>
+	<body>
+		<h1>Beat-Based Game</h1>
+		<p>This is a game that will show buttons when a beat will happen, after which you will have a short period of time to press the button.</p>
+		<p>You get one point for every button you press.</p>
+		<button id="begin_game" onclick="beginGame('easy');">Begin Game (Easy)</button>
+		<button id="begin_game" onclick="beginGame('medium');">Begin Game (Medium)</button>
+		<button id="begin_game" onclick="beginGame('hard');">Begin Game (Hard)</button>
+		<div id="gameboard">
+			Press "Begin Game" to get started
+		</div>
+	</body>
+</html>
