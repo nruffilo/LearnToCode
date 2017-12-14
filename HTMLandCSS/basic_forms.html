@@ -1,0 +1,96 @@
+<!-- 
+This example goes over creating the basic of a front-end form using HTML and minimal CSS.  Forms have 
+different default styling over different browsers and it is important to understand how a basic
+form would look.  I recommend opening this example in at least Firefox, Chrome, and whatever 
+your pre-installed browser is (Safari on Mac or IE/Edge on Windows)
+
+At some point there will be a PHP example on handling form posts.  To do anything with the posted 
+data, you will need a back-end script.
+
+There will also be a Javascript version that will cover basic validation.
+
+ -->
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Basic HTML forms</title>
+		<style>
+			/* A class selector starts with a period (.) */
+
+		</style>
+	</head>
+	<body>
+		<!-- below is the beginning to Alice in Wonderland.  The text has been marked up with basic HTML and
+		quite a few span and div tags with classes in them.  There are a few different classes, and a few differnt 
+		situations - some tags with multiple classes, some with just one. -->
+		
+		<h1>Basic Form Example</h1>
+
+		<!-- A form has 2 attributes - Action and Method.
+			Action is the location of the script/page you want the values of the form to be submitted to
+			method is either:
+				get - all values are sent as part of the URL.  For example: basic_forms.html?value1=abcd&value2=nwene&...
+				post - the values are put in the header of the request for the page - so they are not in the URL.  this allows you to 
+							pass larger amounts of data, and files.				
+		 -->
+			<p>There are a few different types of form inputs that do different things:</p>
+		<form action="./basic_forms.html" method="get">
+			<!-- A label allows you to have text that describes the input field.  If you click on the label
+			name, it will take you to the input field.  It is also important for accessibility, as the screen reader
+			will read out the label information. -->
+			<!-- the input tag doesn't have an open and a close tag.  You can add a /> at the end instead of a > to denote that 
+			it is self-closing -->
+			<!-- form elements have a 'name' attribute which is the value that will be passed when you submit the form.
+			Each element needs an ID which will link the label.  For example putting 'nick' for the name
+			would result in: basic_forms.html?your_name=nick -->
+			<div>
+				<label for="your_name">Name: </label><input type='text' name='your_name' id='your_name'/>
+			</div>
+			<!-- I've put each example in a <div> so that each item will be on it's own line.-->
+			<div>
+				<label for="favorite_season">Favorite Season: </label>
+				<!-- A select/option is how you create a dropdown.  You can provide a list of options. -->
+				<select name="favorite_season" id='favorite_season'>
+					<option>Summer</option>
+					<option>Spring</option>
+					<option>Winter</option>
+					<option>Fall</option>
+				</select>
+			</div>
+						
+			<div>
+				<label for="favorite_time_of_day">Favorite Time of Day: </label>
+				<!-- If you want the value that is passed by the form to be different from what the user sees, you 
+				can define a value parameter.  -->
+				<select name="favorite_time_of_day" id='favorite_time_of_day'>
+					<option value='06:00'>Dawn</option>
+					<option value='12:00'>Noon</option>
+					<option value='18:00'>Dusk</option>
+					<option value='00:00'>Midnight</option>
+				</select>
+			</div>
+			
+			<!-- Radio Buttons - you can only select one.  The must have the same name -->
+			<div>
+				<p>What is 8+4?</p>
+				<!-- The IDs for the elements have to be words.  HTML and javascript do not let you start 
+				and ID with a number.  You can have a number within, but not at the start. -->
+				<input type='radio' name='math_question' id='eight' value='8'/><label for='eight'>8</label><br/> <!-- the BR tag adds a new line - or a line break -->
+				<input type='radio' name='math_question' id='ten' value='10'/><label for='ten'>10</label><br/>
+				<input type='radio' name='math_question' id='twelve' value='12'/><label for='twelve'>12</label><br/>
+				<input type='radio' name='math_question' id='fourteen' value='14'/><label for='fourteen'>14</label><br/>
+			</div>
+			
+			<div>
+				<p>What foods do you like?</p>
+				<!-- A checkbox is also self-closing tag.  -->
+				<input type='checkbox' name='pizza' id='pizza'/><label for='pizza'>Pizza</label><br/>
+				<input type='checkbox' name='pasta' id='pasta'/><label for='pasta'>Pasta</label><br/>
+				<input type='checkbox' name='chicken' id='chicken'/><label for='chicken'>Chicken</label><br/>
+				<input type='checkbox' name='banans' id='banans'/><label for='bananas'>Bananas</label><br/>
+			</div>			
+
+
+		</form>
+	</body>
+</html>
