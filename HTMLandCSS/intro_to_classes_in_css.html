@@ -1,0 +1,128 @@
+<!-- This is an example that goes over the class concept in CSS.  Classes are a way to allow multiple
+tags to share properties with other tags quickly and easily.  It allows you to easily control
+how a certain type (class) of objects will be styled.  This also allows you to ensure that
+all elements of a type (class) have exactly the same styles.  
+
+For example, if you wanted every element with the class "red" to have the color "red", but set the style
+on each individual element, but then decided to make the color a little bit more of a pink, you would have to change
+every element.  With a class, you would only have to change things once.
+ -->
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Introduction to Classes in CSS</title>
+		<style>
+			/* A class selector starts with a period (.) */
+			
+			/* This will set the color (text color) for any element with the class 'green' to green
+			There are two different ways to define colors, using rgb() notation below, and to use
+			hex notation, which looks like this: #00FF00  In both cases, it's the same values
+			but hex is in hexadecimal notation, so FF = 255.  They are both correct, but I find 
+			rgb() easier to read/understand.  
+			 */
+			.green {
+				color: rgb(0,255,0);
+			}
+			
+			/* This will set the color as red. You can make the red darker by lowering the red value. */
+			.red {
+				color: rgb(255,0,0);
+			}
+			
+			.blue {
+				color: rgb(0,0,255);
+			}
+			
+			.emphasis {
+				/* set the font weight as bold.  You can also use values of 100 - 800.  font-weight is how wide
+				the text will appear.  There are a few basic keywords you can use: normal = 300; bold = 600; */
+				font-weight: bold;
+			}
+			
+			.smaller_text {
+				/* set the font size.  the EM is a relative unit - meaning it will set the value as a % of the
+				default font size.  The below measurment, .9em, will set the font to 90% of the size of the 
+				normal font size. */
+				font-size: .9em;
+				/* You can add underlines, and strikethroughs with the text-docration.  I've added this to make the 
+				'smaller_text' items easier to find. */
+				text-decoration: underline;
+			}
+			
+			/* You can do complex selection - like the one below.  If you don't have spaces between the
+			selectors, it means that something has BOTH selectors.  In this case, set something that
+			has both as purple */
+			.red.blue {
+					color: rgb(255,0,255);
+			}
+			
+			/* you can also apply the same properties to multiple classes by separating them with commas */
+			.red, .blue, .green {
+				font-size:1.2em;	
+			}
+			
+			/* The two below items will apply to the elements with a class of 'disappear'  The first one tells
+			the browser that whenever a property changes - color, height, opacity, etc; it will transition over 
+			a set amount of time.  Below I have defined it for .5s - half a second.  
+			  */
+			.disappear {
+				transition: .5s;	
+			}
+
+			/* : after a selector is a state-based selector.  In this case, :hover is when you put your mouse over 
+			the text.  In this case, if you put your mouse over, it will make it disappear (opacity: 0;)
+			The default is 1 (fully visible) */
+			.disappear:hover {
+				opacity: 0;	
+			}
+
+			/* A dropcap is when the first letter in the text is larger, and the other text wraps around it.  
+			CSS gives us a special selector ':first-letter' which applies the styling ONLY to the first
+			letter of the element with the 'dropcap' class
+			*/
+			.dropcap:first-letter {
+				/* Float allows it so that text near this item can flow around it, otherwise the following text would appear on the same line, then wrap
+				to the line below the largest item. */
+				float:left; 
+				/* When using EM as font size, it's a relative size.  So 1em would mean 'keep it the same size'.  2em would mean 2 times the size.  Below
+				would set the size of the first letter to 5 times the default font size. */
+				font-size:5em;
+				line-height:90%;
+				padding-right:2px;
+			}
+
+		</style>
+	</head>
+	<body>
+		<!-- below is the beginning to Alice in Wonderland.  The text has been marked up with basic HTML and
+		quite a few span and div tags with classes in them.  There are a few different classes, and a few differnt 
+		situations - some tags with multiple classes, some with just one. -->
+		
+		<h1>Alice in Wonderland, by Lewis Carroll</h1>
+
+		<div class="chapter" title="Chapter I">
+			<div class="header">
+				Chapter I
+				<div class="sub-header">Down the Rabbit-Hole</div>
+			</div>
+
+			<p class="dropcap">Alice was beginning to get very <span class='red'>tired</span> of <span class='green'>sitting</span> by her sister on the <span class='blue'>bank</span>, and of having nothing to do: once or twice she had <span class='red'>peeped</span> into the book her sister was <span class='red disappear'>reading</span>, but it had no pictures or conversations in it, <span class='green disappear'>'and what is the use of a book,'</span> thought Alice 'without pictures or conversation?'</p>
+
+<p>So she was considering in her own mind (as well as she could, for the hot day made her feel very sleepy and stupid), whether the pleasure of making a daisy-chain would be worth the trouble of getting up and picking the daisies, when suddenly a White Rabbit with pink eyes ran close by her.</p>
+
+<p>There was nothing so <span class='emphasis'>very</span> remarkable in that; nor did Alice think it so <span class='emphasis red blue'>very</span> much out of the way to hear the Rabbit say to itself, 'Oh dear! Oh dear! I shall be late!' (when she thought it over afterwards, it occurred to her that she ought to have wondered at this, but at the time it all seemed quite natural); but when the Rabbit actually <span class='emphasis'>took a watch out of its waistcoat-pocket</span>, and looked at it, and then hurried on, Alice started to her feet, for it flashed across her mind that she had never before seen a rabbit with either a waistcoat-pocket, or a watch to take out of it, and burning with curiosity, she ran across the field after it, and fortunately was just in time to see it pop down a large rabbit-hole under the hedge.</p>
+
+<p class='smaller_text'>In another moment down went Alice after it, never once considering how in the world she was to get out again.</p>
+
+<p>The rabbit-hole went straight on like a tunnel for some way, and then dipped suddenly down, so suddenly that Alice had not a moment to think about stopping herself before she found herself falling down a very deep well.</p>
+
+<p>Either the well was very deep, or she fell very slowly, for she had plenty of time as she went down to look about her and to wonder what was going to happen next. First, she tried to look down and make out what she was coming to, but it was too dark to see anything; then she looked at the sides of the well, and noticed that they were filled with cupboards and book-shelves; here and there she saw maps and pictures hung upon pegs. She took down a jar from one of the shelves as she passed; it was labelled 'ORANGE MARMALADE', but to her great disappointment it was empty: she did not like to drop the jar for fear of killing somebody, so managed to put it into one of the cupboards as she fell past it.</p>
+
+<p>'Well!' thought Alice to herself, 'after such a fall as this, I shall think nothing of tumbling down stairs! How brave they'll all think me at home! Why, I wouldn't say anything about it, even if I fell off the top of the house!' (Which was very likely true.)</p>
+
+<p>Down, down, down. Would the fall <span class='emphasis green'>never</span> come to an end! 'I wonder how many miles I've fallen by this time?' she said aloud. 'I must be getting somewhere near the centre of the earth. Let me see: that would be four thousand miles down, I think -' (for, you see, Alice had learnt several things of this sort in her lessons in the schoolroom, and though this was not a <em>very</em> good opportunity for showing off her knowledge, as there was no one to listen to her, still it was good practice to say it over) '- yes, that's about the right distance — but then I wonder what Latitude or Longitude I've got to?' (Alice had no idea what Latitude was, or Longitude either, but thought they were nice grand words to say.)</p>
+
+<p>Presently she began again. 'I wonder if I shall fall right <span class='emphasis red'>through</span> the earth! How funny it'll seem to come out among the people that walk with their heads downward! The Antipathies, I think -' (she was rather glad there <em>was</em> no one listening, this time, as it didn't sound at all the right word) '- but I shall have to ask them what the name of the country is, you know. Please, Ma'am, is this New Zealand or Australia?' (and she tried to curtsey as she spoke - fancy <em>curtseying</em> as you're falling through the air! Do you think you could manage it?) 'And what an ignorant little girl she'll think me for asking! No, it'll never do to ask: perhaps I shall see it written up somewhere.'</p>
+ 
+	</body>
+</html>
